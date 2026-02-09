@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Choose One 🤍</title>
+
+<style>
+:root{
+  --bg1:#0b0f1a;
+  --bg2:#121a2c;
+  --text:#e5e7eb;
+  --muted:#a7b0c0;
+  --card:rgba(15,23,42,.72);
+  --shadow:0 20px 60px rgba(0,0,0,.55);
+  --radius:18px;
+  --gold:#fbbf24;
+  --blue:#60a5fa;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,Segoe UI,Roboto,Arial;
+  color:var(--text);
+  min-height:100vh;
+  background:
+    radial-gradient(900px 600px at 20% 10%, rgba(251,191,36,.18), transparent 60%),
+    radial-gradient(800px 500px at 80% 30%, rgba(96,165,250,.16), transparent 55%),
+    linear-gradient(160deg,var(--bg1),var(--bg2));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  overflow-x:hidden;
+}
+.wrap{width:min(980px,100%); position:relative}
+
+.top{text-align:center;margin-bottom:18px; animation:fadeUp .7s ease both}
+.pill{
+  display:inline-flex;
+  gap:8px;
+  align-items:center;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  color:var(--muted);
+  font-size:13px;
+}
+h1{margin:12px 0 6px; font-size:clamp(26px,4vw,44px); letter-spacing:.2px}
+.sub{color:var(--muted);font-size:15px; margin:0}
+
+.nameLine{
+  margin-top:10px;
+  font-size:14px;
+  color:rgba(229,231,235,.92);
+}
+.nameLine b{color:#fff}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:18px;
+}
+@media(max-width:760px){.grid{grid-template-columns:1fr}}
+
+.card{
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:var(--radius);
+  padding:18px;
+  box-shadow:var(--shadow);
+  position:relative;
+  overflow:hidden;
+  transform:translateY(10px);
+  opacity:0;
+  animation:fadeUp .7s ease forwards;
+}
+.card:nth-child(2){animation-delay:.08s}
+
+.card::before{
+  content:"";
+  position:absolute;
+  inset:-2px;
+  background:
+    radial-gradient(400px 200px at 15% 0%, rgba(251,191,36,.15), transparent 55%),
+    radial-gradient(420px 220px at 90% 20%, rgba(96,165,250,.14), transparent 55%);
+  pointer-events:none;
+}
+.card > *{position:relative}
+
+.tag{
+  display:inline-block;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.10);
+  font-size:12px;
+  color:var(--muted);
+  margin-bottom:10px;
+}
+.title{font-size:20px;font-weight:800;margin-bottom:6px}
+.desc{color:var(--muted);font-size:14px; line-height:1.55}
+
+.note{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:12px;
+  border:1px dashed rgba(255,255,255,.18);
+  background:rgba(255,255,255,.05);
+  color:var(--muted);
+  font-size:13px;
+}
+
+.actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+button{
+  border:none;
+  cursor:pointer;
+  padding:12px 14px;
+  border-radius:14px;
+  font-weight:800;
+  color:#0b0f1a;
+  background:linear-gradient(180deg,#f59e0b,#fbbf24);
+  box-shadow:0 10px 30px rgba(245,158,11,.22);
+  transition:transform .12s ease, filter .2s ease;
+}
+button:hover{transform:translateY(-1px)}
+button:active{transform:translateY(0)}
+button.blue{
+  background:linear-gradient(180deg,#60a5fa,#3b82f6);
+  color:white;
+  box-shadow:0 10px 30px rgba(59,130,246,.22);
+}
+button.ghost{
+  background:rgba(255,255,255,.06);
+  color:var(--text);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:none;
+  font-weight:700;
+}
+
+.footer{
+  text-align:center;
+  margin-top:14px;
+  color:rgba(167,176,192,.8);
+  font-size:12px;
+  animation:fadeUp .7s ease both;
+  animation-delay:.2s;
+}
+
+.locked{
+  margin-top:18px;
+  padding:18px;
+  border-radius:var(--radius);
+  background:rgba(0,0,0,.25);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:var(--shadow);
+  animation:fadeUp .5s ease both;
+}
+.locked h2{margin:0 0 6px}
+.locked p{margin:0 0 10px; color:var(--muted); line-height:1.6}
+
+.loveNote{
+  margin-top:12px;
+  padding:12px 14px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);
+  color:rgba(229,231,235,.95);
+  line-height:1.6;
+  font-size:14px;
+}
+
+iframe{
+  width:100%;
+  height:520px;
+  border:none;
+  border-radius:14px;
+  margin-top:12px;
+  background:rgba(255,255,255,.02);
+}
+
+.hearts{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.heart{
+  position:absolute;
+  bottom:-40px;
+  font-size:18px;
+  opacity:.7;
+  animation:floatUp linear forwards;
+  filter:blur(.1px);
+}
+@keyframes floatUp{
+  to{ transform:translateY(-120vh) translateX(var(--drift)); opacity:0; }
+}
+@keyframes fadeUp{
+  from{opacity:0; transform:translateY(12px)}
+  to{opacity:1; transform:translateY(0)}
+}
+</style>
+</head>
+
+<body>
+<div class="hearts" id="hearts"></div>
+
+<div class="wrap">
+  <div class="top">
+    <div class="pill">hey <span id="herNamePill">love</span> 🤍 choose only one. no take-backs.</div>
+    <h1>pick one surprise</h1>
+    <p class="sub">you’ll only see what it is after you choose ✨</p>
+    <div class="nameLine">for <b id="herNameLine">you</b></div>
+  </div>
+
+  <div id="chooser">
+    <div class="grid">
+      <div class="card">
+        <div class="tag">mystery box 1</div>
+        <div class="title">surprise #1</div>
+        <p class="desc">no spoilers. reveal only after choosing.</p>
+        <div class="note">hint: a little adventure 🏔️</div>
+        <div class="actions">
+          <button onclick="choose(1)">choose 1</button>
+          <button class="ghost" onclick="hint(1)">extra hint</button>
+        </div>
+        <div class="note" id="hint1" style="display:none;">hint: cozy air + a soft plan 💌</div>
+      </div>
+
+      <div class="card">
+        <div class="tag">mystery box 2</div>
+        <div class="title">surprise #2</div>
+        <p class="desc">no spoilers. reveal only after choosing.</p>
+        <div class="note">hint: something useful 🚲</div>
+        <div class="actions">
+          <button class="blue" onclick="choose(2)">choose 2</button>
+          <button class="ghost" onclick="hint(2)">extra hint</button>
+        </div>
+        <div class="note" id="hint2" style="display:none;">hint: practical joy + your daily win ✨</div>
+      </div>
+    </div>
+
+    <div class="footer">one choice. made with intention 🤍</div>
+  </div>
+
+  <div id="locked" style="display:none"></div>
+</div>
+
+<script>
+/* ====== CUSTOMIZE ====== */
+const HER_NAME = "Alice😍"; 
+const KEY = "lockedChoice_noSpoilers_v1";
+const AFRISKI_PREVIEW = "https://drive.google.com/file/d/1TjJYDWBKv-cPP12bIPbOm_yzhe35X793/preview";
+
+/* Love notes shown AFTER reveal (edit if you want) */
+const LOVE_NOTE_1 = `I wanted you to have something to look forward to — not to rush anything, just a soft moment that says “I still care.”`;
+const LOVE_NOTE_2 = `I wanted to make your everyday lighter — something that supports you quietly, the way I’ve been learning to.`;
+
+/* ====== UI ====== */
+document.getElementById("herNamePill").textContent = HER_NAME.toLowerCase();
+document.getElementById("herNameLine").textContent = HER_NAME;
+
+function hint(n){
+  const el = document.getElementById("hint"+n);
+  el.style.display = (el.style.display === "none") ? "block" : "none";
+}
+
+function choose(n){
+  if(localStorage.getItem(KEY)) return render();
+  if(!confirm("This locks your choice. Continue?")) return;
+  localStorage.setItem(KEY, String(n));
+  render();
+}
+
+/* ====== REVEAL ====== */
+function render(){
+  const c = localStorage.getItem(KEY);
+  if(!c) return;
+
+  document.getElementById("chooser").style.display = "none";
+  const box = document.getElementById("locked");
+  box.style.display = "block";
+
+  if(c === "1"){
+    box.innerHTML = `
+      <div class="locked">
+        <h2>You chose: Afriski trip 🏔️</h2>
+        <p>Delivery: July! </p>
+        <div class="loveNote">${LOVE_NOTE_1}</div>
+        <iframe src="${AFRISKI_PREVIEW}" title="Afriski PDF"></iframe>
+      </div>
+      <div class="footer">locked in 🤍</div>
+    `;
+  } else {
+    box.innerHTML = `
+      <div class="locked">
+        <h2>You chose: Your 4800 BWP bike 🚲</h2>
+        <p>Delivery: July! </p>
+        <div class="loveNote">${LOVE_NOTE_2}</div>
+      </div>
+      <div class="footer">locked in 🤍</div>
+    `;
+  }
+}
+render();
+
+/* ====== SOFT ROMANTIC HEARTS ====== */
+const hearts = document.getElementById("hearts");
+const heartChars = ["🤍","❤️","😘","😊"];
+function spawnHeart(){
+  const s = document.createElement("div");
+  s.className = "heart";
+  s.textContent = heartChars[Math.floor(Math.random()*heartChars.length)];
+  const left = Math.random()*100;
+  const dur = 8 + Math.random()*6;
+  const size = 14 + Math.random()*14;
+  const drift = (Math.random()*80 - 40) + "px";
+  s.style.left = left + "vw";
+  s.style.fontSize = size + "px";
+  s.style.animationDuration = dur + "s";
+  s.style.setProperty("--drift", drift);
+  hearts.appendChild(s);
+  setTimeout(()=>s.remove(), dur*1000);
+}
+setInterval(spawnHeart, 900);
+</script>
+</body>
+</html>
