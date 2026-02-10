@@ -140,6 +140,17 @@ button.ghost{
   font-weight:700;
 }
 
+/* ✅ Reset button style */
+button.reset{
+  background:rgba(255,255,255,.08);
+  color:rgba(229,231,235,.9);
+  border:1px solid rgba(255,255,255,.14);
+  box-shadow:none;
+  font-weight:700;
+  opacity:.8;
+}
+button.reset:hover{opacity:1}
+
 .footer{
   text-align:center;
   margin-top:14px;
@@ -222,7 +233,7 @@ iframe{
         <div class="tag">mystery box 1</div>
         <div class="title">surprise #1</div>
         <p class="desc">no spoilers. reveal only after choosing.</p>
-        <div class="note">hint: a little adventure, one to remember! </div>
+        <div class="note">hint: a little adventure, one to remember!</div>
         <div class="actions">
           <button onclick="choose(1)">choose 1</button>
           <button class="ghost" onclick="hint(1)">extra hint</button>
@@ -234,12 +245,12 @@ iframe{
         <div class="tag">mystery box 2</div>
         <div class="title">surprise #2</div>
         <p class="desc">no spoilers. reveal only after choosing.</p>
-        <div class="note">hint: something useful, something you want </div>
+        <div class="note">hint: something useful, something you want</div>
         <div class="actions">
           <button class="blue" onclick="choose(2)">choose 2</button>
           <button class="ghost" onclick="hint(2)">extra hint</button>
         </div>
-        <div class="note" id="hint2" style="display:none;">hint: something you want, something you will love, something you're gonna be surprised about </div>
+        <div class="note" id="hint2" style="display:none;">hint: something you want, something you will love, something you're gonna be surprised about</div>
       </div>
     </div>
 
@@ -250,13 +261,12 @@ iframe{
 </div>
 
 <script>
-/* ====== CUSTOMIZE ====== */
-const HER_NAME = "Alice😍"; 
+const HER_NAME = "Alice😍";
 const KEY = "lockedChoice_noSpoilers_v1";
 const AFRISKI_PREVIEW = "https://drive.google.com/file/d/1TjJYDWBKv-cPP12bIPbOm_yzhe35X793/preview";
 
-/* Love notes shown AFTER reveal (edit if you want) */
-const LOVE_NOTE_1 = `I wanted you to have something to look forward to, just a soft moment`;
+/* Love notes shown AFTER reveal */
+const LOVE_NOTE_1 = `an experience of a lifetime, a 'cool' celebration, one to remember, memories to capture! you definitely wouldnt regret choosing this at alll`;
 const LOVE_NOTE_2 = `I wanted to make your everyday lighter — something that supports you quietly, the way I’ve been learning to.`;
 
 /* ====== UI ====== */
@@ -275,6 +285,18 @@ function choose(n){
   render();
 }
 
+/* ✅ Reset */
+function resetChoice(){
+  if(!confirm("Reset and choose again?")) return;
+  localStorage.removeItem(KEY);
+  // show chooser again
+  document.getElementById("locked").style.display = "none";
+  document.getElementById("locked").innerHTML = "";
+  document.getElementById("chooser").style.display = "block";
+  // optional: scroll back to top
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
 /* ====== REVEAL ====== */
 function render(){
   const c = localStorage.getItem(KEY);
@@ -288,9 +310,12 @@ function render(){
     box.innerHTML = `
       <div class="locked">
         <h2>You chose: Afriski trip 🏔️</h2>
-        <p>Delivery: July! </p>
+        <p>Delivery: July!</p>
         <div class="loveNote">${LOVE_NOTE_1}</div>
         <iframe src="${AFRISKI_PREVIEW}" title="Afriski PDF"></iframe>
+        <div class="actions" style="margin-top:14px; justify-content:center;">
+          <button class="reset" onclick="resetChoice()">reset</button>
+        </div>
       </div>
       <div class="footer">locked in 🤍</div>
     `;
@@ -298,8 +323,11 @@ function render(){
     box.innerHTML = `
       <div class="locked">
         <h2>You chose: Your 4800 BWP bike 🚲</h2>
-        <p>Delivery: July! </p>
+        <p>Delivery: July!</p>
         <div class="loveNote">${LOVE_NOTE_2}</div>
+        <div class="actions" style="margin-top:14px; justify-content:center;">
+          <button class="reset" onclick="resetChoice()">reset</button>
+        </div>
       </div>
       <div class="footer">locked in 🤍</div>
     `;
@@ -329,3 +357,4 @@ setInterval(spawnHeart, 900);
 </script>
 </body>
 </html>
+
